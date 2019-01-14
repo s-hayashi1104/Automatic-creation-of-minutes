@@ -2,7 +2,7 @@
   <div class="contents">
     <div class="header">
       <h2>Automatic-creation-of-minutes</h2>
-      <button type="button" name="logout" value="logout">Logout</button>
+      <button @click="logout">Logout</button>
     </div>
     <div id="Minute">
       <button type="button" name="newMinute" value="newMinute">Start creating</button>
@@ -14,3 +14,14 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'CreateMinute',
+  methods: {
+    logout: function () {
+      this.$router.push('/signin')
+    }
+  }
+}
+</script>
