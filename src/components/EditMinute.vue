@@ -19,7 +19,7 @@ export default {
   name: 'EditMinute',
   methods: {
     logout: function () {
-      this.$router.push('/signin')
+      this.$router.push('/')
     }
   }
 }

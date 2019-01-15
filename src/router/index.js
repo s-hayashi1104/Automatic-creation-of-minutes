@@ -17,7 +17,7 @@ export default new Router({
       component: Signup
     },
     {
-      path: '/signin',
+      path: '/',
       name: 'Signin',
       component: Signin
     },

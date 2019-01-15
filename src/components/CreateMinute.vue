@@ -20,7 +20,7 @@ export default {
   name: 'CreateMinute',
   methods: {
     logout: function () {
-      this.$router.push('/signin')
+      this.$router.push('/')
     }
   }
 }

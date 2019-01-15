@@ -24,7 +24,7 @@ export default {
       this.$router.push('/editminute')
     },
     logout: function () {
-      this.$router.push('/signin')
+      this.$router.push('/')
     }
   }
 }

@@ -5,7 +5,7 @@
     <input type="password" placeholder="Password" v-model="password">
     <button @click="register">Register</button>
     <p>Do you have an account?
-      <router-link to="/signin">sign in now!!</router-link>
+      <router-link to="/">sign in now!!</router-link>
     </p>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     register: function () {
-      this.$router.push('/signin')
+      this.$router.push('/')
     }
   }
 }
