@@ -7,7 +7,7 @@ export default {
         'content-type': 'application/json'
       }
     }
-    return fetch(`/signup`, options)
+    return fetch('/signup', options)
       .then(response => response.json())
   },
   signIn: ({ name, password }) => {
@@ -18,17 +18,17 @@ export default {
         'content-type': 'application/json'
       }
     }
-    return fetch(`/signin`, options)
+    return fetch('/signin', options)
       .then(response => response.json())
   },
-  getMinutes: () => {
+  getMinutes: (userId) => {
     const options = {
       method: 'GET'
     }
     return fetch(`/user/${userId}/minutes`, options)
       .then(response => response.json())
   },
-  createMinute: ({ name, content }) => {
+  createMinute: (userId, { name, content }) => {
     const options = {
       method: 'POST',
       body: JSON.stringify({ name, content }),
@@ -39,7 +39,7 @@ export default {
     return fetch(`/user/${userId}/minutes`, options)
       .then(response => response.json())
   },
-  editMinute: ({ name, content }) => {
+  editMinute: (userId, { name, content }) => {
     const options = {
       method: 'PUT',
       body: JSON.stringify({ name, content }),
@@ -50,7 +50,7 @@ export default {
     return fetch(`/user/${userId}/minutes`, options)
       .then(response => response.json())
   },
-  deleteMinute: ({ name, content }) => {
+  deleteMinute: (userId, { name, content }) => {
     const options = {
       method: 'DELETE',
       body: JSON.stringify({ name, content }),
