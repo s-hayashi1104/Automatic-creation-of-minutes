@@ -1,10 +1,7 @@
 const setup = function (app) {
-  let test = 'test'
   app.post('/signup', async (req, res) => {
     try {
-      res.json({
-        test
-      })
+      res.json({})
     } catch (err) {
       console.error(err)
       res.status(500)
@@ -12,9 +9,7 @@ const setup = function (app) {
   })
   app.post('/signin', async (req, res) => {
     try {
-      res.json({
-        test
-      })
+      res.json({})
     } catch (err) {
       console.error(err)
       res.status(500)
@@ -22,9 +17,7 @@ const setup = function (app) {
   })
   app.get('/userpage/userId/minutes', async (req, res) => {
     try {
-      res.json({
-        req
-      })
+      res.json({})
     } catch (err) {
       console.error(err)
       res.status(500)
@@ -32,7 +25,7 @@ const setup = function (app) {
   })
   app.post('/userpage/userId/minutes', async (req, res) => {
     try {
-      res.status(200)
+      res.json({})
     } catch (err) {
       console.error(err)
       res.status(500)
@@ -40,15 +33,7 @@ const setup = function (app) {
   })
   app.put('/userpage/userId/minutes', async (req, res) => {
     try {
-      res.status(200)
-    } catch (err) {
-      console.error(err)
-      res.status(500)
-    }
-  })
-  app.put('/userpage/userId/minutes', async (req, res) => {
-    try {
-      res.status(200)
+      res.json({})
     } catch (err) {
       console.error(err)
       res.status(500)
@@ -56,7 +41,7 @@ const setup = function (app) {
   })
   app.delete('/userpage/userId/minutes', async (req, res) => {
     try {
-      res.status(200)
+      res.json({})
     } catch (err) {
       console.error(err)
       res.status(500)
