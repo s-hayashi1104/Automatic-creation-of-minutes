@@ -8,7 +8,7 @@ export default {
       }
     }
     return fetch(`/signup`, options)
-      .then(response => response.json());
+      .then(response => response.json())
   },
   signIn: ({ name, password }) => {
     const options = {
@@ -19,14 +19,14 @@ export default {
       }
     }
     return fetch(`/signin`, options)
-      .then(response => response.json());
+      .then(response => response.json())
   },
   getMinutes: () => {
     const options = {
       method: 'GET'
     }
     return fetch(`/user/${userId}/minutes`, options)
-      .then(response => response.json());
+      .then(response => response.json())
   },
   createMinute: ({ name, content }) => {
     const options = {
@@ -37,7 +37,7 @@ export default {
       }
     }
     return fetch(`/user/${userId}/minutes`, options)
-      .then(response => response.json());
+      .then(response => response.json())
   },
   editMinute: ({ name, content }) => {
     const options = {
@@ -48,7 +48,7 @@ export default {
       }
     }
     return fetch(`/user/${userId}/minutes`, options)
-      .then(response => response.json());
+      .then(response => response.json())
   },
   deleteMinute: ({ name, content }) => {
     const options = {
@@ -59,6 +59,6 @@ export default {
       }
     }
     return fetch(`/user/${userId}/minutes`, options)
-      .then(response => response.json());
+      .then(response => response.json())
   }
-};
+}
