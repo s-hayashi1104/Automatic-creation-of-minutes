@@ -7,25 +7,25 @@ export default {
         'content-type': 'application/json'
       }
     }
-    return fetch('/signup', options)
+    return fetch('/api/signup', options)
       .then(response => response.json())
   },
-  signIn: ({ name, password }) => {
+  signIn: (username, password) => {
     const options = {
       method: 'POST',
-      body: JSON.stringify({ name, password }),
+      body: JSON.stringify({username, password}),
       headers: {
         'content-type': 'application/json'
       }
     }
-    return fetch('/signin', options)
+    return fetch('/api/signin', options)
       .then(response => response.json())
   },
   getMinutes: (userId) => {
     const options = {
       method: 'GET'
     }
-    return fetch(`/user/${userId}/minutes`, options)
+    return fetch(`/api/user/${userId}/minutes`, options)
       .then(response => response.json())
   },
   createMinute: (userId, { name, content }) => {
@@ -36,7 +36,7 @@ export default {
         'content-type': 'application/json'
       }
     }
-    return fetch(`/user/${userId}/minutes`, options)
+    return fetch(`/api/user/${userId}/minutes`, options)
       .then(response => response.json())
   },
   editMinute: (userId, { name, content }) => {
@@ -47,7 +47,7 @@ export default {
         'content-type': 'application/json'
       }
     }
-    return fetch(`/user/${userId}/minutes`, options)
+    return fetch(`/api/user/${userId}/minutes`, options)
       .then(response => response.json())
   },
   deleteMinute: (userId, { name, content }) => {
@@ -58,7 +58,7 @@ export default {
         'content-type': 'application/json'
       }
     }
-    return fetch(`/user/${userId}/minutes`, options)
+    return fetch(`/api/user/${userId}/minutes`, options)
       .then(response => response.json())
   }
 }
