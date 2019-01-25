@@ -9,9 +9,9 @@ app.use(bodyParser.json())
 
 setup(app)
 
-app.listen(process.env.PORT || 4000, () =>
+app.listen(process.env.PORT || 4000, () => {
   console.info(`server started on port ${process.env.PORT}`)
-)
+})
 
 app.use((err, req, res) => {
   console.error(err.stack)
