@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import api from '../api-service'
+
 export default {
   name: 'Signup',
   data () {
@@ -20,8 +22,13 @@ export default {
     }
   },
   methods: {
-    register: function () {
-      this.$router.push('/')
+    register: async function () {
+      const user = await api.signUp(this.username, this.password)
+      if (user) {
+        this.$router.push('/')
+      } else {
+        alert('Registration failed')
+      }
     }
   }
 }
