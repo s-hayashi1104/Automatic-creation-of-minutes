@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Signup from '@/components/Signup'
 import Signin from '@/components/Signin'
-import Userpage from '@/components/Userpage'
+import User from '@/components/User'
 import CreateMinute from '@/components/CreateMinute'
 import EditMinute from '@/components/EditMinute'
 
@@ -22,9 +22,9 @@ export default new Router({
       component: Signin
     },
     {
-      path: '/userpage',
-      name: 'Userpage',
-      component: Userpage
+      path: '/user',
+      name: 'User',
+      component: User
     },
     {
       path: '/createminute',
