@@ -17,7 +17,7 @@
 import api from '../api-service'
 
 export default {
-  name: 'UserPage',
+  name: 'User',
   methods: {
     create: function () {
       this.$router.push('/createminute')
@@ -25,7 +25,7 @@ export default {
     edit: function () {
       this.$router.push('/editminute')
     },
-    delete: async function () {
+    deleteMinute: async function () {
       await api.deleteMinute(this.username, this.content)
     },
     logout: function () {

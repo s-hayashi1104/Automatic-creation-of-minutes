@@ -25,7 +25,7 @@ export default {
     signIn: async function () {
       const user = await api.signIn(this.username, this.password)
       if (user) {
-        this.$router.push('/userpage')
+        this.$router.push('/user')
       } else {
         alert('username or password　is wrong')
       }
