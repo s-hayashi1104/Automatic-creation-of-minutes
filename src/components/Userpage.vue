@@ -8,12 +8,14 @@
     <div id="Minute">
       議事録
       <button @click="edit">Edit</button>
-      <button type="button" name="delete" value="newMinute">Delete</button>
+      <button @click="delete">Delete</button>
     </div>
   </div>
 </template>
 
 <script>
+import api from '../api-service'
+
 export default {
   name: 'UserPage',
   methods: {
@@ -22,6 +24,9 @@ export default {
     },
     edit: function () {
       this.$router.push('/editminute')
+    },
+    delete: async function () {
+      await api.deleteMinute(this.username, this.content)
     },
     logout: function () {
       this.$router.push('/')

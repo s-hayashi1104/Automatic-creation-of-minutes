@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import api from '../api-service'
+
 export default {
   name: 'Signin',
   data: function () {
@@ -20,8 +22,13 @@ export default {
     }
   },
   methods: {
-    signIn: function () {
-      this.$router.push('/userpage')
+    signIn: async function () {
+      const user = await api.signIn(this.username, this.password)
+      if (user) {
+        this.$router.push('/userpage')
+      } else {
+        alert('username or password　is wrong')
+      }
     }
   }
 }
