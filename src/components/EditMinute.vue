@@ -8,7 +8,7 @@
       <form>
         Minute：<br>
         <textarea rows="1000" cols="100" v-model="minute"></textarea><br>
-        <button @click="strage">Submit this minute</button>
+        <button @click="save">Submit this minute</button>
       </form>
     </div>
   </div>
@@ -25,7 +25,7 @@ export default {
     }
   },
   methods: {
-    strage: async function () {
+    save: async function () {
       const content = await api.editMinute(this.username, this.minute)
       if (content) {
         alert('success')

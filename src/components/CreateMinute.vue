@@ -8,7 +8,7 @@
       <button @click="startSpeech">{{ recognitionText }}</button>
         Minute：<br>
         <textarea v-model="minute"/><br>
-        <button @click="strage">Submit this minute</button>
+        <button @click="save">Submit this minute</button>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
     }
   },
   methods: {
-    strage: async function () {
+    save: async function () {
       const content = await api.createMinute(this.username, this.minute)
       if (content) {
         alert('success')
