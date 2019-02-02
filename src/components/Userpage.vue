@@ -8,7 +8,7 @@
     <div id="Minute">
       議事録
       <button @click="edit">Edit</button>
-      <button @click="deleteMinute">Delete</button>
+      <button @click="delete">Delete</button>
     </div>
   </div>
 </template>
