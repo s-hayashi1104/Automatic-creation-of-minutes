@@ -29,7 +29,7 @@ export default {
       const content = await api.editMinute(this.username, this.minute)
       if (content) {
         alert('success')
-        this.$router.push('/userpage')
+        this.$router.push('/user')
       } else {
         alert('Registration failed')
       }
