@@ -5,7 +5,7 @@
       <button @click="logout">Logout</button>
     </div>
     <div id="Minute">
-      <button @click="startSpeech">{{ recognitionText }}</button>
+      <button @click="startListening">{{ recognitionText }}</button>
         Minute：<br>
         <textarea v-model="minute"/><br>
         <button @click="save">Submit this minute</button>
@@ -15,14 +15,13 @@
 
 <script>
 import api from '../api-service'
-
+const recognition = new webkitSpeechRecognition() // eslint-disable-line 
 export default {
   name: 'CreateMinute',
   data: function () {
     return {
       minute: '',
-      recognition: new webkitSpeechRecognition(), // eslint-disable-line 
-      recognitionText: 'Start Speech',
+      recognitionText: 'Start Listening',
       speechIsValid: true
     }
   },
@@ -39,33 +38,31 @@ export default {
     logout: function () {
       this.$router.push('/')
     },
-    startSpeech: function () {
+    startListening: function () {
       if (!this.speechIsValid) { return }
-      this.recognition.start()
+      recognition.start()
     },
     stop: function () {
       this.speechIsValid = false
-      this.startSpeech()
+      this.startListening()
     }
   },
   created: function () {
-    this.recognition.onstart = () => {
-      this.recognitionText = 'Listenning'
+    recognition.onstart = () => {
+      this.recognitionText = 'Listening'
     }
-    this.recognition.onend = () => {
-      this.recognitionText = 'Start Speech'
+    recognition.onend = () => {
+      this.recognitionText = 'Start Listening'
     }
-    this.recognition.onresult = (event) => {
-      this.recognition.continuous = true // マイク使用許可を一回だけにする
-      this.recognition.interimResults = true // 中間結果を返す
-      // 再帰後もインスタンスが生きててonresultイベントが発生するので認識一時停止時もすぐ関数を抜ける処理を入れる
+    recognition.onresult = (event) => {
+      recognition.continuous = true
+      recognition.interimResults = true
       if (!this.speechIsValid) { return }
-      // 音声認識の結果は（interimResults == true なら）リアルタイムに認識候補結果を返してくる
       const results = event.results
       for (let i = event.resultIndex; i < results.length; i++) {
         if (results[i].isFinal) {
           this.minute = results[i][0].transcript
-          this.startSpeech()
+          this.startListening()
         } else {
           this.minute = results[i][0].transcript
         }
