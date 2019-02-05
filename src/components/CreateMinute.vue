@@ -5,7 +5,7 @@
       <button @click="logout">Logout</button>
     </div>
     <div id="Minute">
-      <button @click="startSpeech">{{ recognitionText }}</button>
+      <button @click="startListening">{{ recognitionText }}</button>
         Minute：<br>
         <textarea v-model="minute"/><br>
         <button @click="save">Submit this minute</button>
@@ -39,13 +39,13 @@ export default {
     logout: function () {
       this.$router.push('/')
     },
-    startSpeech: function () {
+    startListening: function () {
       if (!this.speechIsValid) { return }
       this.recognition.start()
     },
     stop: function () {
       this.speechIsValid = false
-      this.startSpeech()
+      this.startListening()
     }
   },
   created: function () {
@@ -65,7 +65,7 @@ export default {
       for (let i = event.resultIndex; i < results.length; i++) {
         if (results[i].isFinal) {
           this.minute = results[i][0].transcript
-          this.startSpeech()
+          this.startListening()
         } else {
           this.minute = results[i][0].transcript
         }
