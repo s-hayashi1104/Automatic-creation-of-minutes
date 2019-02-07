@@ -7,6 +7,7 @@ yarn-error.log*
 /test/unit/coverage/
 /test/e2e/reports/
 selenium-debug.log
+automatic-creation-of-minutes-firebase-adminsdk-dd99r-ec74771db5.json
 
 # Editor directories and files
 .idea

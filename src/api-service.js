@@ -1,8 +1,8 @@
 export default {
-  signUp: ({ name, password }) => {
+  signUp: (username, password) => {
     const options = {
       method: 'POST',
-      body: JSON.stringify({ name, password }),
+      body: JSON.stringify({ username, password }),
       headers: {
         'content-type': 'application/json'
       }
