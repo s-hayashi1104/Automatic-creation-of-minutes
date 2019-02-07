@@ -25,6 +25,7 @@ export default {
     register: async function () {
       const user = await api.signUp(this.username, this.password)
       if (user) {
+        alert('Create account: ', user)
         this.$router.push('/')
       } else {
         alert('Registration failed')

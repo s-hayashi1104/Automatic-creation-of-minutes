@@ -12,17 +12,16 @@ const ref = db.ref('users')
 
 const setup = function (app) {
   app.post('/api/signup', async (req, res) => {
-    try {
-      ref.set({
-        id: '1',
-        name: req.body.username,
-        password: req.body.password
+    ref.set({
+      id: '1',
+      name: req.body.username,
+      password: req.body.password
+    }).then(function () {
+      res.json(req.body.username)
+    })
+      .catch(function (err) {
+        console.error('Error writing document: ', err)
       })
-      res.status(200)
-    } catch (err) {
-      console.error(err)
-      res.status(500)
-    }
   })
   app.post('/api/signin', async (req, res) => {
     try {
