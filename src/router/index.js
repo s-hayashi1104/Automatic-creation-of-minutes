@@ -22,17 +22,17 @@ export default new Router({
       component: Signin
     },
     {
-      path: '/user',
+      path: '/user/*',
       name: 'User',
       component: User
     },
     {
-      path: '/createminute',
+      path: '/user/*/createminute',
       name: 'CreateMinute',
       component: CreateMinute
     },
     {
-      path: '/editminute',
+      path: '/user/*/editminute',
       name: 'EditMinute',
       component: EditMinute
     }
