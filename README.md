@@ -2,6 +2,8 @@
 # automatic-creation-of-minutes
 
 > A Vue.js project
+> 議事録の自動生成を行う
+> API doc https://github.com/s-hayashi1104/Automatic-creation-of-minutes/issues/3
 
 ## Build Setup
 
