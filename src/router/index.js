@@ -5,10 +5,11 @@ import Signin from '@/components/Signin'
 import User from '@/components/User'
 import CreateMinute from '@/components/CreateMinute'
 import EditMinute from '@/components/EditMinute'
+import firebase from 'firebase'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   mode: 'history',
   routes: [
     {
@@ -22,9 +23,10 @@ export default new Router({
       component: Signin
     },
     {
-      path: '/user/*',
+      path: '/user',
       name: 'User',
-      component: User
+      component: User,
+      meta: { requiresAuth: true }
     },
     {
       path: '/user/*/createminute',
@@ -38,3 +40,23 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  if (requiresAuth) {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        next()
+      } else {
+        next({
+          path: '/signin',
+          query: { redirect: to.fullPath }
+        })
+      }
+    })
+  } else {
+    next()
+  }
+})
+
+export default router

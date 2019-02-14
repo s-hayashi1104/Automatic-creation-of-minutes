@@ -1,7 +1,5 @@
 const userRoute = require('./user-route')
 const firebase = require('firebase')
-// const admin = require('firebase-admin')
-// const serviceAccount = require('../automatic-creation-of-minutes-firebase-adminsdk-dd99r-ec74771db5.json')
 
 // Initialize Firebase
 const config = {
@@ -13,10 +11,6 @@ const config = {
   messagingSenderId: '695781313773'
 }
 firebase.initializeApp(config)
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: 'https://automatic-creation-of-minutes.firebaseio.com'
-// })
 
 const db = firebase.firestore()
 
@@ -44,8 +38,9 @@ const setup = function (app) {
     await firebase.auth().signInWithEmailAndPassword(
       req.body.username, req.body.password
     ).then(UserCredential => {
-      const user = UserCredential.user
-      res.json(user)
+      return UserCredential.user.getIdToken().then(idToken => {
+        res.json(idToken)
+      })
     })
       .catch(err => {
         console.error('Auth error:', err)
