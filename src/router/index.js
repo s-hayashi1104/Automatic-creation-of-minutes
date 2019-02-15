@@ -29,12 +29,12 @@ let router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: '/user/*/createminute',
+      path: '/user/createminute',
       name: 'CreateMinute',
       component: CreateMinute
     },
     {
-      path: '/user/*/editminute',
+      path: '/user/editminute',
       name: 'EditMinute',
       component: EditMinute
     }
@@ -44,12 +44,14 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   if (requiresAuth) {
+    console.log(firebase.auth().currentUser)
     firebase.auth().onAuthStateChanged(function (user) {
+      console.log(user)
       if (user) {
         next()
       } else {
         next({
-          path: '/signin',
+          path: '/',
           query: { redirect: to.fullPath }
         })
       }

@@ -12,6 +12,7 @@
 
 <script>
 import api from '../api-service'
+import firebase from 'firebase'
 
 export default {
   name: 'Signin',
@@ -25,11 +26,22 @@ export default {
     signIn: async function () {
       const idToken = await api.signIn(this.username, this.password)
       localStorage.setItem('idToken', idToken)
-      if (idToken) {
-        this.$router.push(({ path: `/user` }))
-      } else {
-        alert('username or password　is wrong')
-      }
+
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          console.log('user---------------------')
+          console.log(user)
+          if (idToken) {
+            console.log('idToken------------------')
+            console.log(firebase.auth().currentUser)
+            this.$router.push(({ path: `/user` }))
+          } else {
+            alert('username or password　is wrong')
+          }
+        } else {
+          alert(`ログインできていない${console.log(firebase.auth().currentUser)}`)
+        }
+      })
     }
   }
 }
