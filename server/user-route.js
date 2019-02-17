@@ -28,36 +28,32 @@ router.use(function (req, res, next) {
   })
 })
 
-router.get('/:userId/minutes', async (req, res) => {
+router.get('/user/minutes', async (req, res) => {
   try {
     res.json(req.params)
   } catch (err) {
     console.error(err)
-    res.status(500)
   }
 })
-router.post('/:userId/minutes', async (req, res) => {
+router.post('/user/minutes', async (req, res) => {
   try {
     res.json({})
   } catch (err) {
     console.error(err)
-    res.status(500)
   }
 })
-router.put('/:userId/minutes', async (req, res) => {
+router.put('/user/minutes', async (req, res) => {
   try {
     res.json({})
   } catch (err) {
     console.error(err)
-    res.status(500)
   }
 })
-router.delete('/:userId/minutes', async (req, res) => {
+router.delete('/user/minutes', async (req, res) => {
   try {
     res.json({})
   } catch (err) {
     console.error(err)
-    res.status(500)
   }
 })
 

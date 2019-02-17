@@ -23,17 +23,18 @@ export default {
   data () {
     return { minutes: [] }
   },
-  getMinutes: async function () {
+  created: async function () {
+    alert('start')
     this.minutes = []
     const { data } = await api.getMinutes()
     this.minutes = data
   },
   methods: {
     create: function () {
-      this.$router.push('/createminute')
+      this.$router.push('/user/createminute')
     },
     edit: function () {
-      this.$router.push('/editminute')
+      this.$router.push('/user/editminute')
     },
     deleteMinute: async function () {
       await api.deleteMinute(this.username, this.content)

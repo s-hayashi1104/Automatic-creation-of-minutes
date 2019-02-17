@@ -23,11 +23,20 @@ const setup = function (app) {
       const name = user.email
       const id = user.uid
 
-      db.collection('users').doc('7ffX0WTIbVyjfIWbzttp').set({
+      db.collection('users').add({
         id,
         name,
         password: req.body.password
       })
+      let verified = firebase.auth().currentUser.emailVerified
+      console.log(verified)
+      // 未確認のメールアドレスの場合、メールを送信する
+      if (!verified) {
+      // メール送信処理
+        firebase.auth().currentUser.sendEmailVerification()
+        let email = firebase.auth().currentUser.email
+        console.log('確認メールを送信しました。', email)
+      }
       res.json(user)
     })
       .catch(err => {
@@ -38,8 +47,18 @@ const setup = function (app) {
     await firebase.auth().signInWithEmailAndPassword(
       req.body.username, req.body.password
     ).then(UserCredential => {
+      let verified = firebase.auth().currentUser.emailVerified
+      console.log(verified)
+      // 未確認のメールアドレスの場合、メールを送信する
+      if (!verified) {
+      // メール送信処理
+        firebase.auth().currentUser.sendEmailVerification()
+        let email = firebase.auth().currentUser.email
+        console.log('確認メールを送信しました。', email)
+      }
+      let uid = UserCredential.user.uid
       return UserCredential.user.getIdToken().then(idToken => {
-        res.json(idToken)
+        res.json({idToken, uid})
       })
     })
       .catch(err => {
