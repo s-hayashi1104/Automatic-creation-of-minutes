@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const firebase = require('firebase')
+const config = require('./firebase-config')
 const admin = require('firebase-admin')
 const serviceAccount = require('../automatic-creation-of-minutes-firebase-adminsdk-dd99r-ec74771db5.json')
 
@@ -7,6 +9,9 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://automatic-creation-of-minutes.firebaseio.com'
 })
+
+firebase.initializeApp(config)
+const db = firebase.firestore()
 
 // Authentification Filter
 router.use(function (req, res, next) {
@@ -24,32 +29,42 @@ router.use(function (req, res, next) {
     let uid = decodedToken.uid
     next()
   }).catch(err => {
-    console.error(err)
+    console.error(`idToken error ${err}`)
   })
 })
 
-router.get('/user/minutes', async (req, res) => {
-  try {
-    res.json(req.params)
-  } catch (err) {
-    console.error(err)
-  }
+router.get('/:user/minutes', async (req, res) => {
+  console.log(`req:${req}, req.params:${req.params}`)
+  const uId = req.params.user
+  console.log(uId)
+  db.collection('user').where('id', '==', uId)
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        // doc.data() is never undefined for query doc snapshots
+        res.json(doc.data())
+        console.log(doc.id, ' => ', doc.data())
+      })
+    })
+    .catch(function (error) {
+      console.log('Error getting documents: ', error)
+    })
 })
-router.post('/user/minutes', async (req, res) => {
+router.post('/:user/minutes', async (req, res) => {
   try {
     res.json({})
   } catch (err) {
     console.error(err)
   }
 })
-router.put('/user/minutes', async (req, res) => {
+router.put('/:user/minutes', async (req, res) => {
   try {
     res.json({})
   } catch (err) {
     console.error(err)
   }
 })
-router.delete('/user/minutes', async (req, res) => {
+router.delete('/:user/minutes', async (req, res) => {
   try {
     res.json({})
   } catch (err) {
