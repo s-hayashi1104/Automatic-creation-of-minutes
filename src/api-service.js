@@ -21,26 +21,26 @@ export default {
     return fetch('/api/signin', options)
       .then(response => response.json())
   },
-  getMinutes: (userId) => {
+  getMinutes: (uId) => {
     const options = {
       method: 'GET',
       headers: {
         'x-access-token': localStorage.getItem('idToken')
       }
     }
-    return fetch(`/api/user/minutes`, options)
+    return fetch(`/api/user/${uId}/minutes`, options)
       .then(response => response.json())
   },
-  createMinute: (userId, { name, content }) => {
+  createMinute: (uId, { content }) => {
     const options = {
       method: 'POST',
-      body: JSON.stringify({ name, content }),
+      body: JSON.stringify({ content }),
       headers: {
         'content-type': 'application/json',
         'x-access-token': localStorage.getItem('idToken')
       }
     }
-    return fetch(`/api/user/minutes`, options)
+    return fetch(`/api/user/${uId}/minutes`, options)
       .then(response => response.json())
   },
   editMinute: (userId, { name, content }) => {
@@ -52,7 +52,7 @@ export default {
         'x-access-token': localStorage.getItem('idToken')
       }
     }
-    return fetch(`/api/user/minutes`, options)
+    return fetch(`/api/user/:uId/minutes`, options)
       .then(response => response.json())
   },
   deleteMinute: (userId, { name, content }) => {
@@ -64,7 +64,7 @@ export default {
         'x-access-token': localStorage.getItem('idToken')
       }
     }
-    return fetch(`/api/user/minutes`, options)
+    return fetch(`/api/user/:uId/minutes`, options)
       .then(response => response.json())
   }
 }

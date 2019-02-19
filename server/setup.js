@@ -18,13 +18,11 @@ const setup = function (app) {
         password: req.body.password
       })
       let verified = firebase.auth().currentUser.emailVerified
-      console.log(verified)
-      // 未確認のメールアドレスの場合、メールを送信する
+      // In case of unconfirmed email address, send email
       if (!verified) {
-      // メール送信処理
         firebase.auth().currentUser.sendEmailVerification()
         let email = firebase.auth().currentUser.email
-        console.log('確認メールを送信しました。', email)
+        console.log('confirmation mail has been sent', email)
       }
       res.json(user)
     })
@@ -37,13 +35,8 @@ const setup = function (app) {
       req.body.username, req.body.password
     ).then(UserCredential => {
       let verified = firebase.auth().currentUser.emailVerified
-      console.log(verified)
-      // 未確認のメールアドレスの場合、メールを送信する
       if (!verified) {
-      // メール送信処理
-        firebase.auth().currentUser.sendEmailVerification()
-        let email = firebase.auth().currentUser.email
-        console.log('確認メールを送信しました。', email)
+        res.json({message: 'Please authenticate your e-mail address'})
       }
       let uid = UserCredential.user.uid
       return UserCredential.user.getIdToken().then(idToken => {

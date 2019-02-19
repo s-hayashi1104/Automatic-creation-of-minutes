@@ -33,16 +33,14 @@ router.use(function (req, res, next) {
   })
 })
 
-router.get('/:user/minutes', async (req, res) => {
-  console.log(`req:${req}, req.params:${req.params}`)
-  const uId = req.params.user
-  console.log(uId)
-  db.collection('user').where('id', '==', uId)
+router.get('/:uId/minutes', async (req, res) => {
+  const uId = req.params.uId
+  db.collection('users').where('id', '==', uId)
     .get()
     .then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
         // doc.data() is never undefined for query doc snapshots
-        res.json(doc.data())
+        res.json(doc.data().minutes)
         console.log(doc.id, ' => ', doc.data())
       })
     })
@@ -50,21 +48,21 @@ router.get('/:user/minutes', async (req, res) => {
       console.log('Error getting documents: ', error)
     })
 })
-router.post('/:user/minutes', async (req, res) => {
+router.post('/:uId/minutes', async (req, res) => {
   try {
     res.json({})
   } catch (err) {
     console.error(err)
   }
 })
-router.put('/:user/minutes', async (req, res) => {
+router.put('/:uId/minutes', async (req, res) => {
   try {
     res.json({})
   } catch (err) {
     console.error(err)
   }
 })
-router.delete('/:user/minutes', async (req, res) => {
+router.delete('/:uId/minutes', async (req, res) => {
   try {
     res.json({})
   } catch (err) {
