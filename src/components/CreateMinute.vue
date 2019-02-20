@@ -27,7 +27,8 @@ export default {
   },
   methods: {
     save: async function () {
-      const content = await api.createMinute(this.username, this.minute)
+      const uId = localStorage.getItem('uId')
+      const content = await api.createMinute(uId, this.minute)
       if (content) {
         alert('success')
         this.$router.push('/user')

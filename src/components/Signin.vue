@@ -24,8 +24,10 @@ export default {
   methods: {
     signIn: async function () {
       const user = await api.signIn(this.username, this.password)
-      if (user) {
-        this.$router.push('/user')
+      localStorage.setItem('idToken', user.idToken)
+      localStorage.setItem('uId', user.uid)
+      if (user.idToken) {
+        this.$router.push(({ path: `/user` }))
       } else {
         alert('username or password　is wrong')
       }

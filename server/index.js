@@ -15,5 +15,4 @@ app.listen(process.env.PORT || 4000, () => {
 
 app.use((err, req, res) => {
   console.error(err.stack)
-  res.status(500).json({ message: 'Something broke!' })
 })

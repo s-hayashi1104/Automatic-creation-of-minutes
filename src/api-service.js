@@ -1,8 +1,8 @@
 export default {
-  signUp: ({ name, password }) => {
+  signUp: (username, password) => {
     const options = {
       method: 'POST',
-      body: JSON.stringify({ name, password }),
+      body: JSON.stringify({ username, password }),
       headers: {
         'content-type': 'application/json'
       }
@@ -21,22 +21,26 @@ export default {
     return fetch('/api/signin', options)
       .then(response => response.json())
   },
-  getMinutes: (userId) => {
+  getMinutes: (uId) => {
     const options = {
-      method: 'GET'
-    }
-    return fetch(`/api/user/${userId}/minutes`, options)
-      .then(response => response.json())
-  },
-  createMinute: (userId, { name, content }) => {
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({ name, content }),
+      method: 'GET',
       headers: {
-        'content-type': 'application/json'
+        'x-access-token': localStorage.getItem('idToken')
       }
     }
-    return fetch(`/api/user/${userId}/minutes`, options)
+    return fetch(`/api/user/${uId}/minutes`, options)
+      .then(response => response.json())
+  },
+  createMinute: (uId, contents) => {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({ contents }),
+      headers: {
+        'content-type': 'application/json',
+        'x-access-token': localStorage.getItem('idToken')
+      }
+    }
+    return fetch(`/api/user/${uId}/minutes`, options)
       .then(response => response.json())
   },
   editMinute: (userId, { name, content }) => {
@@ -44,10 +48,11 @@ export default {
       method: 'PUT',
       body: JSON.stringify({ name, content }),
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'x-access-token': localStorage.getItem('idToken')
       }
     }
-    return fetch(`/api/user/${userId}/minutes`, options)
+    return fetch(`/api/user/:uId/minutes`, options)
       .then(response => response.json())
   },
   deleteMinute: (userId, { name, content }) => {
@@ -55,10 +60,11 @@ export default {
       method: 'DELETE',
       body: JSON.stringify({ name, content }),
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'x-access-token': localStorage.getItem('idToken')
       }
     }
-    return fetch(`/api/user/${userId}/minutes`, options)
+    return fetch(`/api/user/:uId/minutes`, options)
       .then(response => response.json())
   }
 }

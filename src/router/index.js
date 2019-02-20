@@ -27,12 +27,12 @@ export default new Router({
       component: User
     },
     {
-      path: '/createminute',
+      path: '/user/createminute',
       name: 'CreateMinute',
       component: CreateMinute
     },
     {
-      path: '/editminute',
+      path: '/user/editminute',
       name: 'EditMinute',
       component: EditMinute
     }

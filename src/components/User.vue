@@ -7,8 +7,10 @@
     </div>
     <div id="Minute">
       議事録
-      <button @click="edit">Edit</button>
-      <button @click="deleteMinute">Delete</button>
+      <div class="minute-list" v-for="(minute) in minutes" :key="minute.id">{{minute.contents}}
+        <button @click="edit">Edit</button>
+        <button @click="deleteMinute">Delete</button>
+      </div>
     </div>
   </div>
 </template>
@@ -18,12 +20,21 @@ import api from '../api-service'
 
 export default {
   name: 'User',
+  data () {
+    return { minutes: null }
+  },
+  created: async function () {
+    this.minutes = null
+    const uId = localStorage.getItem('uId')
+    const data = await api.getMinutes(uId)
+    this.minutes = data
+  },
   methods: {
     create: function () {
-      this.$router.push('/createminute')
+      this.$router.push(({ path: `/user/createminute` }))
     },
     edit: function () {
-      this.$router.push('/editminute')
+      this.$router.push(({ path: `/user/editminute` }))
     },
     deleteMinute: async function () {
       await api.deleteMinute(this.username, this.content)
