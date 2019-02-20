@@ -29,3 +29,7 @@ npm run e2e
 # run all tests
 npm test
 ```
+
+
+Improvements
+・Fix firebase documentId needs to be the same as uId
