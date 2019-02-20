@@ -31,10 +31,10 @@ export default {
     return fetch(`/api/user/${uId}/minutes`, options)
       .then(response => response.json())
   },
-  createMinute: (uId, { content }) => {
+  createMinute: (uId, contents) => {
     const options = {
       method: 'POST',
-      body: JSON.stringify({ content }),
+      body: JSON.stringify({ contents }),
       headers: {
         'content-type': 'application/json',
         'x-access-token': localStorage.getItem('idToken')

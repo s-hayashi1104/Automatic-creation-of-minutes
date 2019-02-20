@@ -12,8 +12,7 @@ const setup = function (app) {
       const name = user.email
       const id = user.uid
 
-      db.collection('users').add({
-        id,
+      db.collection('users').doc(id).set({
         name,
         password: req.body.password
       })

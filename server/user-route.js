@@ -35,25 +35,32 @@ router.use(function (req, res, next) {
 
 router.get('/:uId/minutes', async (req, res) => {
   const uId = req.params.uId
-  db.collection('users').where('id', '==', uId)
+  db.collection('users').doc(uId)
     .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        // doc.data() is never undefined for query doc snapshots
+    .then(doc => {
+      if (doc.exists) {
         res.json(doc.data().minutes)
-        console.log(doc.id, ' => ', doc.data())
-      })
+        console.log('Document data:', doc.data())
+      } else {
+      // doc.data() will be undefined in this case
+        console.log('No such document!')
+      }
     })
-    .catch(function (error) {
+    .catch(error => {
       console.log('Error getting documents: ', error)
     })
 })
+
 router.post('/:uId/minutes', async (req, res) => {
-  try {
-    res.json({})
-  } catch (err) {
-    console.error(err)
-  }
+  const uId = req.params.uId
+  const contents = req.body.contents
+  console.log(contents)
+  db.collection('users').doc(uId)
+    .update({minutes: firebase.firestore.FieldValue.arrayUnion({contents})})
+    .then(res.json({}))
+    .catch(error => {
+      console.log('Error getting documents: ', error)
+    })
 })
 router.put('/:uId/minutes', async (req, res) => {
   try {
