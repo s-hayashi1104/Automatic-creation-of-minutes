@@ -43,28 +43,28 @@ export default {
     return fetch(`/api/user/${uId}/minutes`, options)
       .then(response => response.json())
   },
-  editMinute: (userId, { name, content }) => {
+  editMinute: (uId, index, contents) => {
     const options = {
       method: 'PUT',
-      body: JSON.stringify({ name, content }),
+      body: JSON.stringify({ index, contents }),
       headers: {
         'content-type': 'application/json',
         'x-access-token': localStorage.getItem('idToken')
       }
     }
-    return fetch(`/api/user/:uId/minutes`, options)
+    return fetch(`/api/user/${uId}/minutes`, options)
       .then(response => response.json())
   },
-  deleteMinute: (userId, { name, content }) => {
+  deleteMinute: (uId, contents) => {
     const options = {
       method: 'DELETE',
-      body: JSON.stringify({ name, content }),
+      body: JSON.stringify({ contents }),
       headers: {
         'content-type': 'application/json',
         'x-access-token': localStorage.getItem('idToken')
       }
     }
-    return fetch(`/api/user/:uId/minutes`, options)
+    return fetch(`/api/user/${uId}/minutes`, options)
       .then(response => response.json())
   }
 }
