@@ -1,7 +1,11 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <div class="contents">
+      <div class="header">
+        <h2>Automatic-creation-of-minutes</h2>
+      </div>
+      <router-view/>
+    </div>
   </div>
 </template>
 
