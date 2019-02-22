@@ -42,7 +42,8 @@ export default {
       if (user.idToken) {
         this.$router.push(({ path: `/user` }))
       } else {
-        alert('email or password　is wrong')
+        this.errors = []
+        this.errors.push('email or password　is wrong')
       }
     },
     checkForm: function (e) {

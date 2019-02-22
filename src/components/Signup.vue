@@ -41,7 +41,8 @@ export default {
         alert('Create account: ', user.name)
         this.$router.push('/')
       } else {
-        alert('Registration failed')
+        this.erros = []
+        this.errors.push('Sorry Registration failed')
       }
     },
     checkForm: function (e) {
