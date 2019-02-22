@@ -7,7 +7,7 @@
     <div id="Minute">
       <button @click="startListening">{{ recognitionText }}</button>
         Minute：<br>
-        <textarea v-model="minute"/><br>
+        <textarea  rows="100" cols="100" v-model="minute"/><br>
         <button @click="save">Submit this minute</button>
     </div>
   </div>

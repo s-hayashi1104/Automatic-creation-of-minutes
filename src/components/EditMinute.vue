@@ -1,16 +1,9 @@
 <template>
-  <div class="contents">
-    <div class="header">
-      <h2>Automatic-creation-of-minutes</h2>
-      <button @click="logout">Logout</button>
-    </div>
-    <div id="Minute">
-      <form>
-        Minute：<br>
-        <textarea rows="1000" cols="100" v-model="minute"></textarea><br>
-        <button @click="save">Submit this minute</button>
-      </form>
-    </div>
+  <div>
+    {{editMinute}}<br>
+    <textarea rows="100" cols="100" v-model="minute"/><br>
+    <button @click="save">Submit this minute</button>
+    <button @click="deleteMinute(editMinute)">Delete</button>
   </div>
 </template>
 
@@ -21,21 +14,31 @@ export default {
   name: 'EditMinute',
   data: function () {
     return {
-      minute: ''
+      minute: this.editMinute
     }
   },
+  props: ['editMinute'],
   methods: {
+    created: async function () {
+      this.minutes = null
+      const uId = localStorage.getItem('uId')
+      const data = await api.getMinutes(uId)
+      this.minutes = data
+    },
     save: async function () {
-      const content = await api.editMinute(this.username, this.minute)
+      const uId = localStorage.getItem('uId')
+      const content = await api.editMinute(uId, this.minute)
       if (content) {
         alert('success')
-        this.$router.push('/user')
       } else {
         alert('Registration failed')
       }
     },
-    logout: function () {
-      this.$router.push('/')
+    deleteMinute: async function (contents) {
+      const uId = localStorage.getItem('uId')
+      await api.deleteMinute(uId, contents)
+      const data = await api.getMinutes(uId)
+      this.minutes = data
     }
   }
 }
