@@ -1,7 +1,16 @@
 <template>
   <div class="signup">
     <h2>Sign up</h2>
-    <input type="text" placeholder="Username" v-model="username">
+    <p v-if="errors.length">
+      <b>Please correct the following error(s):</b>
+      <ul>
+        <li
+         v-for="(error, index) in errors"
+         :key="index">{{ error }}
+         </li>
+      </ul>
+  </p>
+    <input type="email" placeholder="Email" v-model="email">
     <input type="password" placeholder="Password" v-model="password">
     <button @click="register">Register</button>
     <p>Do you have an account?
@@ -17,19 +26,41 @@ export default {
   name: 'Signup',
   data () {
     return {
-      username: '',
+      errors: [],
+      email: '',
       password: ''
     }
   },
   methods: {
     register: async function () {
-      const user = await api.signUp(this.username, this.password)
+      if (!this.checkForm()) {
+        return
+      }
+      const user = await api.signUp(this.email, this.password)
       if (user) {
-        alert('Create account: ', user)
+        alert('Create account: ', user.name)
         this.$router.push('/')
       } else {
         alert('Registration failed')
       }
+    },
+    checkForm: function (e) {
+      this.errors = []
+      if (!this.email) {
+        this.errors.push('Email required.')
+      } else if (!this.validEmail(this.email)) {
+        this.errors.push('Valid email required.')
+      }
+      if (!this.password) {
+        this.errors.push('Password required.')
+      }
+      if (!this.errors.length) {
+        return true
+      }
+    },
+    validEmail: function (email) {
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ // eslint-disable-line 
+      return re.test(email)
     }
   }
 }
