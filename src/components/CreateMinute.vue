@@ -17,7 +17,7 @@ export default {
     return {
       minute: this.minute,
       recognitionText: 'Start Listening',
-      speechIsValid: false
+      speechIsValid: true
     }
   },
   methods: {
@@ -34,12 +34,14 @@ export default {
       this.$router.push('/')
     },
     startListening: function () {
-      if (this.speechIsValid) { return }
-      recognition.start()
+      if (!this.speechIsValid) {
+        recognition.stop()
+      } else {
+        recognition.start()
+      }
     },
     stop: function () {
       this.speechIsValid = false
-      this.startListening()
     }
   },
   created: function () {
@@ -47,20 +49,16 @@ export default {
       this.recognitionText = 'Listening'
     }
     recognition.onend = () => {
+      if (this.speechIsValid) {
+        recognition.start()
+      }
+      this.speechIsValid = true
       this.recognitionText = 'Start Listening'
     }
     recognition.onresult = (event) => {
-      recognition.continuous = true
-      recognition.interimResults = true
-      if (!this.speechIsValid) { return }
-      const results = event.results
-      for (let i = event.resultIndex; i < results.length; i++) {
-        if (results[i].isFinal) {
-          this.minute = results[i][0].transcript
-          this.startListening()
-        } else {
-          this.minute = results[i][0].transcript
-        }
+      recognition.stop()
+      if (event.results.length > 0) {
+        this.minute += event.results[0][0].transcript
       }
     }
   }
