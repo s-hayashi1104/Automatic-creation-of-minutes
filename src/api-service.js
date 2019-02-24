@@ -43,10 +43,10 @@ export default {
     return fetch(`/api/user/${uId}/minutes`, options)
       .then(response => response.json())
   },
-  editMinute: (uId, index, contents) => {
+  editMinute: (uId, contents) => {
     const options = {
       method: 'PUT',
-      body: JSON.stringify({ index, contents }),
+      body: JSON.stringify({ contents }),
       headers: {
         'content-type': 'application/json',
         'x-access-token': localStorage.getItem('idToken')

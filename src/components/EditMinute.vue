@@ -1,9 +1,12 @@
 <template>
   <div>
-    {{editMinute}}<br>
-    <textarea rows="100" cols="100" v-model="minute"/><br>
-    <button @click="save">Submit this minute</button>
-    <button @click="deleteMinute(editMinute)">Delete</button>
+    {{origin}}<br>
+    <button @click="switchDisplay">{{label}}</button>
+    <div v-show="display">
+      <textarea rows="40" cols="100" v-model="minute"/><br>
+      <button @click="save(origin)">Submit this minute</button>
+    </div>
+    <button @click="deleteMinute(origin)">Delete</button>
   </div>
 </template>
 
@@ -14,31 +17,32 @@ export default {
   name: 'EditMinute',
   data: function () {
     return {
-      minute: this.editMinute
+      display: false,
+      minute: this.origin
     }
   },
-  props: ['editMinute'],
+  computed: {
+    label: function () { return this.display ? 'close' : 'This minute editing' }
+  },
+  props: ['origin'],
   methods: {
-    created: async function () {
-      this.minutes = null
-      const uId = localStorage.getItem('uId')
-      const data = await api.getMinutes(uId)
-      this.minutes = data
-    },
-    save: async function () {
-      const uId = localStorage.getItem('uId')
-      const content = await api.editMinute(uId, this.minute)
-      if (content) {
-        alert('success')
+    switchDisplay: function () {
+      if (this.display) {
+        this.display = false
       } else {
-        alert('Registration failed')
+        this.display = true
       }
+    },
+    save: async function (contents) {
+      const uId = localStorage.getItem('uId')
+      await api.editMinute(uId, this.minute)
+      await api.deleteMinute(uId, contents)
+      this.$emit('redisplay')
     },
     deleteMinute: async function (contents) {
       const uId = localStorage.getItem('uId')
       await api.deleteMinute(uId, contents)
-      const data = await api.getMinutes(uId)
-      this.minutes = data
+      this.$emit('redisplay')
     }
   }
 }

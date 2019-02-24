@@ -65,11 +65,16 @@ router.post('/:uId/minutes', async (req, res) => {
     })
 })
 router.put('/:uId/minutes', async (req, res) => {
-  try {
-    res.json({})
-  } catch (err) {
-    console.error(err)
-  }
+  const uId = req.params.uId
+  const contents = req.body.contents
+  db.collection('users').doc(uId)
+    .update({
+      minutes: firebase.firestore.FieldValue.arrayUnion({contents})
+    })
+    .then(res.json({}))
+    .catch(error => {
+      console.log('Error getting documents: ', error)
+    })
 })
 router.delete('/:uId/minutes', async (req, res) => {
   const uId = req.params.uId
