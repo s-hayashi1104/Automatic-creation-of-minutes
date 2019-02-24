@@ -1,16 +1,11 @@
 <template>
-  <div class="contents">
-    <div class="header">
-      <h2>Automatic-creation-of-minutes</h2>
-      <button @click="logout">Logout</button>
-    </div>
     <div id="Minute">
-      <button @click="startListening">{{ recognitionText }}</button>
+      <button @click="startListening">{{ recognitionText }}</button><br>
+      <button @click="stop">stop Listening</button>
         Minute：<br>
-        <textarea  rows="100" cols="100" v-model="minute"/><br>
+        <textarea  rows="40" cols="100" v-model="minute"/><br>
         <button @click="save">Submit this minute</button>
     </div>
-  </div>
 </template>
 
 <script>
@@ -20,9 +15,9 @@ export default {
   name: 'CreateMinute',
   data: function () {
     return {
-      minute: '',
+      minute: this.minute,
       recognitionText: 'Start Listening',
-      speechIsValid: true
+      speechIsValid: false
     }
   },
   methods: {
@@ -30,7 +25,6 @@ export default {
       const uId = localStorage.getItem('uId')
       const content = await api.createMinute(uId, this.minute)
       if (content) {
-        alert('success')
         this.$router.push('/user')
       } else {
         alert('Registration failed')
@@ -40,7 +34,7 @@ export default {
       this.$router.push('/')
     },
     startListening: function () {
-      if (!this.speechIsValid) { return }
+      if (this.speechIsValid) { return }
       recognition.start()
     },
     stop: function () {

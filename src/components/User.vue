@@ -1,12 +1,14 @@
 <template>
   <div id="minutes">
-    議事録
-    <button @click="create">New</button>
     <button @click="logout">Logout</button>
+    <h3>Create new minute!</h3>
+    <button @click="create">New</button>
+    <h3>your minutes list</h3>
     <EditMinute class="minute-list"
       v-for="(minute, index) in minutes"
       :key="index"
-      :editMinute="minute.contents"
+      :origin="minute.contents"
+      v-on:redisplay="redisplay"
       ></EditMinute>
   </div>
 </template>
@@ -23,7 +25,7 @@ export default {
   data () {
     return {
       minutes: null,
-      editMinute: null
+      origin: null
     }
   },
   created: async function () {
@@ -33,6 +35,13 @@ export default {
     this.minutes = data
   },
   methods: {
+    redisplay: async function () {
+      alert('OK')
+      this.minutes = null
+      const uId = localStorage.getItem('uId')
+      const data = await api.getMinutes(uId)
+      this.minutes = data
+    },
     create: function () {
       this.$router.push(({ path: `/user/createminute` }))
     },
