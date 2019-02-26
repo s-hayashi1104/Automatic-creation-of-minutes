@@ -1,22 +1,40 @@
 <template>
-  <div class="signin">
-    <h2>Sign in</h2>
-    <p v-if="errors.length">
-      <b>Please correct the following error(s):</b>
-      <ul>
-        <li
-         v-for="(error, index) in errors"
-         :key="index">{{ error }}
-        </li>
-      </ul>
-    </p>
-    <input type="email" placeholder="Email" v-model="email">
-    <input type="password" placeholder="Password" v-model="password">
-    <button @click="signIn">Signin</button>
-    <p>You don't have an account?
-      <router-link to="/signup">create account now!!</router-link>
-    </p>
-  </div>
+  <v-container>
+    <v-layout justify-center>
+      <v-flex xs6 md6>
+        <v-toolbar color="primary" dark>
+          <v-toolbar-title>Sign in</v-toolbar-title>
+        </v-toolbar>
+        <v-card>
+          <v-container fluid>
+            <v-form ref="form" v-model="valid" lazy-validation>
+              <v-layout row wrap>
+                 <v-text-field
+                  type="email"
+                  v-model="email"
+                  :rules="emailRules"
+                  label="Email"
+                  required></v-text-field>
+              </v-layout>
+              <v-layout row wrap>
+                <v-text-field
+                 type="password"
+                 v-model="password"
+                 :rules="passwordRules"
+                 label="Password"
+                 required></v-text-field>
+              </v-layout>
+              <v-layout row wrap justify-end>
+                <v-btn outline round class="green green-text darken-2" :disabled="!valid" @click="signIn">sign in</v-btn>
+                <v-btn outline round class="green green-text darken-2" @click="clear">clear</v-btn>
+              </v-layout>
+            </v-form>
+              <v-btn outline round class="green green-text darken-2" to="/signup">create account now!!</v-btn>
+          </v-container>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -26,74 +44,39 @@ export default {
   name: 'Signin',
   data: function () {
     return {
-      errors: [],
+      valid: true,
+      error: null,
       email: '',
-      password: ''
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
+      ],
+      password: '',
+      passwordRules: [
+        v => !!v || 'Passwird is required',
+        v => (v && v.length >= 6) || 'Password must be longer than 6 characters'
+      ]
     }
   },
   methods: {
     signIn: async function () {
-      if (!this.checkForm()) {
-        return
-      }
-      const user = await api.signIn(this.email, this.password)
-      localStorage.setItem('idToken', user.idToken)
-      localStorage.setItem('uId', user.uid)
-      if (user.idToken) {
-        this.$router.push(({ path: `/user` }))
-      } else {
-        this.errors = []
-        this.errors.push('email or password　is wrong')
+      if (this.$refs.form.validate()) {
+        const user = await api.signIn(this.email, this.password)
+        localStorage.setItem('idToken', user.idToken)
+        localStorage.setItem('uId', user.uid)
+        if (user.idToken) {
+          this.$router.push(({ path: `/user` }))
+        } else {
+          console.log('email or password　is wrong')
+        }
       }
     },
-    checkForm: function (e) {
-      this.errors = []
-      if (!this.email) {
-        this.errors.push('Email required.')
-      } else if (!this.validEmail(this.email)) {
-        this.errors.push('Valid email required.')
-      }
-      if (!this.password) {
-        this.errors.push('Password required.')
-      }
-      if (!this.errors.length) {
-        return true
-      }
-    },
-    validEmail: function (email) {
-      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ // eslint-disable-line 
-      return re.test(email)
+    clear () {
+      this.$refs.form.reset()
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.signin {
-  margin-top: 20px;
-
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center
-}
-input {
-  margin: 10px 0;
-  padding: 10px;
-}
 </style>
