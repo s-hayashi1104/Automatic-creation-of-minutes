@@ -1,13 +1,18 @@
 <template>
-  <div>
-    {{origin}}<br>
-    <button @click="switchDisplay">{{label}}</button>
-    <div v-show="display">
-      <textarea rows="40" cols="100" v-model="minute"/><br>
-      <button @click="save(origin)">Submit this minute</button>
-    </div>
-    <button @click="deleteMinute(origin)">Delete</button>
-  </div>
+ <v-container fluid grid-list-md>
+   {{origin}}<br>
+   <v-btn @click="switchDisplay">{{label}}</v-btn>
+    <v-textarea
+      name="input-7-1"
+      box
+      label="Edit minute"
+      auto-grow
+      v-model="minute"
+      v-show="display"
+    ></v-textarea>
+    <v-btn @click="save(origin)">Submit this minute</v-btn>
+    <v-btn @click="deleteMinute(origin)">Delete</v-btn>
+  </v-container>
 </template>
 
 <script>
