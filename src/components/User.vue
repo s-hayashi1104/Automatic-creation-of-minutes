@@ -7,7 +7,7 @@
           <v-spacer></v-spacer>
             <v-btn
               color="orange darken-2"
-              small dark @click="create"
+              small dark @click="switchDisplay"
             >
               <v-icon>edit</v-icon>{{label}}
             </v-btn>
@@ -77,7 +77,7 @@ export default {
       const data = await api.getMinutes(uId)
       this.minutes = data
     },
-    create: function () {
+    switchDisplay: function () {
       if (this.display) {
         this.display = false
       } else {

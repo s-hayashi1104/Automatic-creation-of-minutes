@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     save: async function () {
+      this.speechIsValid = false
       const uId = localStorage.getItem('uId')
       await api.createMinute(uId, this.minute)
       this.$emit('redisplay')
