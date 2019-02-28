@@ -11,6 +11,7 @@
               <v-layout row wrap>
                  <v-text-field
                   type="email"
+                  prepend-icon="person"
                   v-model="email"
                   :rules="emailRules"
                   label="Email"
@@ -19,6 +20,7 @@
               <v-layout row wrap>
                 <v-text-field
                  type="password"
+                 prepend-icon="lock"
                  v-model="password"
                  :rules="passwordRules"
                  label="Password"
