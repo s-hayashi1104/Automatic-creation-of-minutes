@@ -1,11 +1,16 @@
 <template>
-    <div id="Minute">
-      <button @click="startListening">{{ recognitionText }}</button><br>
-      <button @click="stop">stop Listening</button>
-        Minute：<br>
-        <textarea  rows="40" cols="100" v-model="minute"/><br>
-        <button @click="save">Submit this minute</button>
-    </div>
+ <v-container fluid grid-list-md>
+   <v-btn @click="startListening">{{ recognitionText }}</v-btn>
+   <v-btn @click="stop">stop Listening</v-btn>
+    <v-textarea
+      name="input-7-1"
+      box
+      label="Create new minute"
+      auto-grow
+      v-model="minute"
+    ></v-textarea>
+    <v-btn @click="save">Submit this minute</v-btn>
+  </v-container>
 </template>
 
 <script>
@@ -22,13 +27,10 @@ export default {
   },
   methods: {
     save: async function () {
+      this.speechIsValid = false
       const uId = localStorage.getItem('uId')
-      const content = await api.createMinute(uId, this.minute)
-      if (content) {
-        this.$router.push('/user')
-      } else {
-        alert('Registration failed')
-      }
+      await api.createMinute(uId, this.minute)
+      this.$emit('redisplay')
     },
     logout: function () {
       this.$router.push('/')

@@ -1,13 +1,29 @@
 <template>
-  <div>
-    {{origin}}<br>
-    <button @click="switchDisplay">{{label}}</button>
-    <div v-show="display">
-      <textarea rows="40" cols="100" v-model="minute"/><br>
-      <button @click="save(origin)">Submit this minute</button>
-    </div>
-    <button @click="deleteMinute(origin)">Delete</button>
-  </div>
+<v-card>
+ <v-container fluid grid-list-md>
+   {{origin}}<br>
+    <v-btn @click="switchDisplay" small>
+      <v-icon>edit</v-icon>
+      {{label}}
+    </v-btn>
+    <v-textarea
+      name="input-7-1"
+      box
+      label="Edit minute"
+      auto-grow
+      v-model="minute"
+      v-show="display"
+    ></v-textarea>
+    <v-btn
+      v-show="display"
+      @click="save(origin)"
+    >Submit this minute</v-btn>
+    <v-btn @click="deleteMinute(origin)" small>
+      <v-icon>delete</v-icon>
+      delete
+    </v-btn>
+  </v-container>
+  </v-card>
 </template>
 
 <script>
@@ -22,7 +38,7 @@ export default {
     }
   },
   computed: {
-    label: function () { return this.display ? 'close' : 'This minute editing' }
+    label: function () { return this.display ? 'close' : 'edit' }
   },
   props: ['origin'],
   methods: {
