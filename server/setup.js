@@ -1,21 +1,13 @@
 const userRoute = require('./user-route')
 const firebase = require('firebase')
 
-const db = firebase.firestore()
-
 const setup = function (app) {
   app.post('/api/signup', async (req, res) => {
     await firebase.auth().createUserWithEmailAndPassword(
       req.body.username, req.body.password
     ).then(UserCredential => {
       const user = UserCredential.user
-      const name = user.email
-      const id = user.uid
 
-      db.collection('users').doc(id).set({
-        name,
-        password: req.body.password
-      })
       let verified = firebase.auth().currentUser.emailVerified
       // In case of unconfirmed email address, send email
       if (!verified) {
