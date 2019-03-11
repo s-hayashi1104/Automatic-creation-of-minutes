@@ -7,7 +7,7 @@
         </v-toolbar>
         <v-card>
           <v-container fluid>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form ref="form" v-model="valid">
               <v-layout row wrap>
                  <v-text-field
                   type="email"
