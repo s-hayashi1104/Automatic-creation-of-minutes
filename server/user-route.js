@@ -56,7 +56,7 @@ router.post('/:uId/minutes', async (req, res) => {
   const contents = req.body.contents
   console.log(contents)
   db.collection('users').doc(uId)
-    .update({
+    .set({
       minutes: firebase.firestore.FieldValue.arrayUnion({contents})
     })
     .then(res.json({}))
