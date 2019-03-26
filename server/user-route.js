@@ -58,6 +58,9 @@ router.post('/:uId/minutes', async (req, res) => {
   db.collection('users').doc(uId)
     .set({
       minutes: firebase.firestore.FieldValue.arrayUnion({contents})
+    },
+    {
+      merge: true
     })
     .then(res.json({}))
     .catch(error => {
